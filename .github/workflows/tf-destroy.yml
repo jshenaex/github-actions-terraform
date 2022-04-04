@@ -1,15 +1,12 @@
-# Name that appears when GitHub Actions run
-name: "Terraform Plan"
+name: "Terraform Destroy"
 
-# 1. Set to trigger on push to master
 on:
-   pull_request:
+  workflow_dispatch:
 
 jobs:
-   terraform-plan:
-      name: "Terraform Plan"
-      runs-on: ubuntu-latest
-      steps:
+  Terraform-Destroy:
+    runs-on: ubuntu-latest
+          steps:
          # 2.  Set Checkout action to checkout the code from the repo
          - name: "Setup - Checkout"
            uses: actions/checkout@v2.1.0
@@ -30,7 +27,6 @@ jobs:
          - name: "Run - Terraform Init"
            run: terraform init -input=false
 
-         # 6. Run Terraform plan
-         - name: "Run - Terraform Plan"
-           id: plan
-           run: terraform plan -input=false -no-color
+         # 6. Run Terraform apply
+         - name: "Run - Terraform Destroy"
+           run: terraform destroy
