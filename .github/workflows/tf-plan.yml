@@ -32,4 +32,4 @@ jobs:
 
          # 6. Run Terraform plan
          - name: "Run - Terraform Plan"
-           run: terraform plan -out=tfplan -input=false -no-color
+           run: terraform plan -input=false -no-color

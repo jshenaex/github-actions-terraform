@@ -34,4 +34,4 @@ jobs:
 
          # 6. Run Terraform apply
          - name: "Run - Terraform Apply"
-           run: terraform apply -input=false tfplan
+           run: terraform apply -input=false
