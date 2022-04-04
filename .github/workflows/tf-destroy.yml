@@ -1,20 +1,15 @@
-# Name that appears when GitHub Actions run
-name: "Terraform Apply"
+name: "Terraform Destroy"
 
-# 1. Set to trigger on push to master
 on:
-   push:
-      branches:
-         - master
+  workflow_dispatch:
 
 jobs:
-   terraform-plan:
-      name: "Terraform Apply"
-      runs-on: ubuntu-latest
-      steps:
+  Terraform-Destroy:
+    runs-on: ubuntu-latest
+          steps:
          # 2.  Set Checkout action to checkout the code from the repo
          - name: "Setup - Checkout"
-           uses: actions/checkout@v3.0.0
+           uses: actions/checkout@v2.1.0
 
          # 3. Use AWS action to setup credentials
          - name: Configure AWS Credentials
@@ -26,12 +21,12 @@ jobs:
 
          # 4. Have GitHub Actions pull down the Terraform CLI from Actions registry
          - name: "Setup - Terraform CLI"
-           uses: hashicorp/setup-terraform@v1.4.0
+           uses: hashicorp/setup-terraform@v1.0.1
 
          # 5. Initialize the Terraform environment
          - name: "Run - Terraform Init"
            run: terraform init -input=false
 
          # 6. Run Terraform apply
-         - name: "Run - Terraform Apply"
-           run: terraform apply -input=false -auto-approve
+         - name: "Run - Terraform Destroy"
+           run: terraform destroy

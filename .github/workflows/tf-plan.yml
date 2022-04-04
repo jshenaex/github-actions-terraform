@@ -1,5 +1,7 @@
+# Name that appears when GitHub Actions run
 name: "Terraform Plan"
 
+# 1. Set to trigger on push to master
 on:
    pull_request:
 
@@ -8,36 +10,26 @@ jobs:
       name: "Terraform Plan"
       runs-on: ubuntu-latest
       steps:
+         # 2.  Set Checkout action to checkout the code from the repo
          - name: "Setup - Checkout"
-           uses: actions/checkout@v2.1.0
+           uses: actions/checkout@v3.0.0
 
-         - name: "Setup - Build AWS Credentials"
-           run: |
-              mkdir -p ~/.aws
-              echo "[default]" > ~/.aws/credentials
-              echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
-              echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+         # 3. Use AWS action to setup credentials
+         - name: Configure AWS Credentials
+           uses: aws-actions/configure-aws-credentials@v1
+           with:
+              aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              aws-region: us-east-2
 
+         # 4. Have GitHub Actions pull down the Terraform CLI from Actions registry
          - name: "Setup - Terraform CLI"
-           uses: hashicorp/setup-terraform@v1.0.1
+           uses: hashicorp/setup-terraform@v1.4.0
 
+         # 5. Initialize the Terraform environment
          - name: "Run - Terraform Init"
            run: terraform init -input=false
 
+         # 6. Run Terraform plan
          - name: "Run - Terraform Plan"
-           id: plan
            run: terraform plan -input=false -no-color
-
-         - name: "Run - Terraform Comment"
-           uses: actions/github-script@0.9.0
-           env:
-              STDOUT: "```${{ steps.plan.outputs.stdout }}```"
-           with:
-              github-token: ${{ secrets.GITHUB_TOKEN }}
-              script: |
-                 github.issues.createComment({
-                   issue_number: context.issue.number,
-                   owner: context.repo.owner,
-                   repo: context.repo.repo,
-                   body: process.env.STDOUT
-                 })
