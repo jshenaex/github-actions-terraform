@@ -19,7 +19,7 @@ jobs:
               aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
               aws-region: us-east-2
 
-         # 4. Have GitHub Actions pull down the Terraform CLI from Actions registry
+         # 4. Have GitHub Actions pull down the Terraform CLI from Actions registr
          - name: "Setup - Terraform CLI"
            uses: hashicorp/setup-terraform@v1.0.1
 
