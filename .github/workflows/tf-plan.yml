@@ -24,7 +24,7 @@ jobs:
 
          # 4. Have GitHub Actions pull down the Terraform CLI from Actions registry
          - name: "Setup - Terraform CLI"
-           uses: hashicorp/setup-terraform@v1.4.1
+           uses: hashicorp/setup-terraform@v1.4.0
 
          # 5. Initialize the Terraform environment
          - name: "Run - Terraform Init"
