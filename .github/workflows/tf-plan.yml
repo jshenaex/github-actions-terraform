@@ -22,13 +22,9 @@ jobs:
               aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
               aws-region: us-east-2
 
-        - name: Terraform Format
+        - name: "Terraform Format"
           id: fmt
           run: terraform fmt -check
-
-        - name: Terraform Init
-          id: init
-          run: terraform init
 
          # 4. Have GitHub Actions pull down the Terraform CLI from Actions registry
          - name: "Setup - Terraform CLI"
