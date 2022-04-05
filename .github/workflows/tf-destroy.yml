@@ -30,4 +30,4 @@ jobs:
 
          # 6. Run Terraform apply
          - name: "Run - Terraform Destroy"
-           run: terraform destroy
+           run: terraform destroy -input=false -auto-approve
