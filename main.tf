@@ -5,20 +5,16 @@ terraform {
       version = "~> 3.27"
     }
   }
-
   required_version = ">= 0.14.9"
+  backend "s3" {
+    bucket = "jshen-tf-state-bucket-test"
+    key = "path/to/key"
+    region = "us-east-2"
+  }
 }
 
 provider "aws" {
   profile = "default"
-  region  = "us-west-2"
+  region  = "us-east-2"
 }
 
-resource "aws_instance" "app_server" {
-  ami           = "ami-830c94e3"
-  instance_type = "t2.micro"
-
-  tags = {
-    Name = "ExampleAppServerInstance"
-  }
-}
