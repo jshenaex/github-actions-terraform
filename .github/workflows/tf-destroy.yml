@@ -6,27 +6,27 @@ on:
 jobs:
   Terraform-Destroy:
     runs-on: ubuntu-latest
-          steps:
-         # 2.  Set Checkout action to checkout the code from the repo
-         - name: "Setup - Checkout"
-           uses: actions/checkout@v2.1.0
+      steps:
+      # 2.  Set Checkout action to checkout the code from the repo
+        - name: "Setup - Checkout"
+          uses: actions/checkout@v2.1.0
 
-         # 3. Use AWS action to setup credentials
-         - name: Configure AWS Credentials
-           uses: aws-actions/configure-aws-credentials@v1
-           with:
+        # 3. Use AWS action to setup credentials
+        - name: Configure AWS Credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
               aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
               aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
               aws-region: us-east-2
 
-         # 4. Have GitHub Actions pull down the Terraform CLI from Actions registr
-         - name: "Setup - Terraform CLI"
-           uses: hashicorp/setup-terraform@v1.0.1
+        # 4. Have GitHub Actions pull down the Terraform CLI from Actions registr
+        - name: "Setup - Terraform CLI"
+          uses: hashicorp/setup-terraform@v1.0.1
 
-         # 5. Initialize the Terraform environment
-         - name: "Run - Terraform Init"
-           run: terraform init -input=false
+        # 5. Initialize the Terraform environment
+        - name: "Run - Terraform Init"
+          run: terraform init -input=false
 
-         # 6. Run Terraform apply
-         - name: "Run - Terraform Destroy"
-           run: terraform destroy
+        # 6. Run Terraform apply
+        - name: "Run - Terraform Destroy"
+          run: terraform destroy
